@@ -4,7 +4,7 @@
 import PackageDescription
 
 let filename = "openssl.xcframework.zip"
-let version = "3.4.301"
+let version = "3.4.302"
 let checksum = "1d42181bdeb0d2cb7ec92b8dd3ea7363a398f2705ea566b2cb306b49ad9f05aa"
 
 let package = Package(
@@ -19,7 +19,7 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "openssl",
-            url: "https://github.com/iljs/openssl/releases/download/\(version)/\(filename)",
+            url: "https://github.com/iljs/openssl-apple/releases/download/\(version)/\(filename)",
             checksum: checksum
         ),
 
