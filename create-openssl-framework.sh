@@ -172,6 +172,7 @@ done
 rm bin/*/$FWNAME.dylib
 
 for SYS in ${ALL_SYSTEMS[@]}; do
+    echo "gg $SYS"
     if [[ $SYS == "MacOSX" || $SYS == "Catalyst" ]]; then
         SYSDIR="$FWROOT/$SYS"
         FWDIR="$SYSDIR/$FWNAME.framework"
@@ -180,31 +181,38 @@ for SYS in ${ALL_SYSTEMS[@]}; do
         fi
         cd $FWDIR
 
+        echo "gg"
         mkdir "Versions"
         mkdir "Versions/A"
         mkdir "Versions/A/Resources"
         mv "openssl" "Headers" "Versions/A"
         mv "Info.plist" "Versions/A/Resources"
 
+        echo "gg 22"
+
         (cd "Versions" && ln -s "A" "Current")
         ln -s "Versions/Current/openssl"
         ln -s "Versions/Current/Headers"
-        ln -s "Versions/Current/Resources"
+        # ln -s "Versions/Current/Resources"
 
         cd ../../..
     fi
 done
 
 build_xcframework() {
+    echo "Building $FWNAME.xcframework"
     local FRAMEWORKS=($FWROOT/*/$FWNAME.framework)
     local ARGS=
     for ARG in ${FRAMEWORKS[@]}; do
         ARGS+="-framework ${ARG} "
     done
 
+    echo "Frameworks: $ARGS"
+
     echo
     xcodebuild -create-xcframework $ARGS -output "$FWROOT/$FWNAME.xcframework"
 
+    echo "Signing"
     # Подпись готового XCFramework
     sign_framework "$FWROOT/$FWNAME.xcframework"
 }
