@@ -193,7 +193,10 @@ for SYS in ${ALL_SYSTEMS[@]}; do
         (cd "Versions" && ln -s "A" "Current")
         ln -s "Versions/Current/openssl"
         ln -s "Versions/Current/Headers"
-        # ln -s "Versions/Current/Resources"
+        
+                # Исправленная часть для Info.plist
+        mkdir -p Resources
+        ln -s "../Versions/Current/Resources/Info.plist" "Resources/Info.plist"
 
         cd ../../..
     fi
